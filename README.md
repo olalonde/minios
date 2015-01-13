@@ -1,6 +1,8 @@
 OS X starter repository for
 [http://littleosbook.github.io/](http://littleosbook.github.io/)
 
+![screenshot.png](screenshot.png)
+
 # Requirements
 
 docker (boot2docker) and fig.sh
