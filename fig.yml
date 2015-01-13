@@ -1,0 +1,5 @@
+builder:
+  build: .
+  command: make
+  volumes:
+    - .:/code
