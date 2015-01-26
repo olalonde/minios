@@ -10,28 +10,23 @@
  *  @param fg The foreground color
  *  @param bg The background color
  */
-void fb_write_cell(unsigned int i, char c, unsigned char fg, unsigned char bg)
+void fb_write_cell(unsigned int i, char c[], unsigned char fg, unsigned char bg)
 {
-  char *fb = (char *) 0x000B8000;
-  fb[i * 2] = c;
-  fb[i * 2 + 1] = ((fg & 0x0F) << 4) | (bg & 0x0F);
+  char key = c[i];
+  if (key != 0){
+    char *fb = (char *) 0x000B8000;
+    fb[i * 2] = key;
+    fb[i * 2 + 1] = ((fg & 0x0F) << 4) | (bg & 0x0F);
+    i++;
+    fb_write_cell(i, c, fg, bg);
+  }
 }
 
 /* The C function */
 int kmain()
 {
-  fb_write_cell(0, 'H', FB_GREEN, FB_DARK_GREY);
-  fb_write_cell(1, 'e', FB_GREEN, FB_DARK_GREY);
-  fb_write_cell(2, 'l', FB_GREEN, FB_DARK_GREY);
-  fb_write_cell(3, 'l', FB_GREEN, FB_DARK_GREY);
-  fb_write_cell(4, 'o', FB_GREEN, FB_DARK_GREY);
-  fb_write_cell(5, ' ', FB_GREEN, FB_DARK_GREY);
-  fb_write_cell(6, 'w', FB_GREEN, FB_DARK_GREY);
-  fb_write_cell(7, 'o', FB_GREEN, FB_DARK_GREY);
-  fb_write_cell(8, 'r', FB_GREEN, FB_DARK_GREY);
-  fb_write_cell(9, 'l', FB_GREEN, FB_DARK_GREY);
-  fb_write_cell(10, 'd', FB_GREEN, FB_DARK_GREY);
-  fb_write_cell(11, '!', FB_GREEN, FB_DARK_GREY);
+  char str[] = "Hello World!";
+  fb_write_cell(0, str, FB_GREEN, FB_DARK_GREY);
   return 0;
 }
 
